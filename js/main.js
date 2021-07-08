@@ -24,3 +24,38 @@ for (let i = 0; i < imageArr.length; i++) {
 
   document.querySelector('ul.gallery').appendChild(item).appendChild(image);
 }
+
+const closeButton = document.querySelector('.modal__button');
+
+const backdrop = document.querySelector('.backdrop');
+
+closeButton.addEventListener('click', () => {
+  backdrop.classList.add('is-hidden');
+});
+
+gallery.addEventListener('click', openModal);
+
+function openModal(e) {
+  if (e.target.nodeName !== 'LI' && e.target.nodeName !== 'IMG') {
+    return;
+  }
+  backdrop.classList.remove('is-hidden');
+  let target;
+  // console.log(e.target.nodeName);
+  if (e.target.nodeName === 'LI') {
+    target = e.target.querySelector('.gallery__image');
+  } else {
+    target = e.target;
+  }
+
+  openImage(target);
+}
+
+function openImage(target) {
+  const targetImage = target.getAttribute('src');
+  console.log(targetImage);
+
+  const modalImage = document.querySelector('.modal__image');
+  modalImage.setAttribute('src', targetImage);
+  console.log(modalImage);
+}

@@ -18,6 +18,8 @@
   width: 300px;
   margin-bottom: 30px;
   margin-right: 30px;
+
+  cursor: pointer;
 }
 .gallery__image {
   display: block;
@@ -41,11 +43,15 @@
   background-color: rgba(0, 0, 0, 0.9);
 
   opacity: 1;
+  transform: scale(1);
+
+  transition: opacity 250ms ease, transform 250ms ease;
 }
 
-.backdrop .is-hidden {
+.backdrop.is-hidden {
   opacity: 0;
   pointer-events: none;
+  transform: scale(1.1);
 }
 
 .modal {
