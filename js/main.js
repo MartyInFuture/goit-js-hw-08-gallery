@@ -67,3 +67,35 @@ backdrop.addEventListener('click', (e) => {
     backdrop.classList.add('is-hidden');
   }
 });
+
+// arrows
+
+document.addEventListener('keydown', (e) => {
+  if (!backdrop.classList.contains('is-hidden')) {
+    const image = document.querySelector('.modal__image');
+    const imageSource = imageArr.indexOf(image.getAttribute('src'));
+    if (e.keyCode === 39) {
+      function nextImage() {
+        const imageIndex = imageArr.indexOf(imageArr[imageSource]);
+        const nextImage = imageArr[imageSource + 1];
+        if (imageIndex < imageArr.length - 1) {
+          return nextImage;
+        } else {
+          return imageArr[imageSource];
+        }
+      }
+      image.setAttribute('src', nextImage());
+    } else if (e.keyCode === 37) {
+      function prewImage() {
+        const imageIndex = imageArr.indexOf(imageArr[imageSource]);
+        const nextImage = imageArr[imageSource - 1];
+        if (imageIndex > 0) {
+          return nextImage;
+        } else {
+          return imageArr[imageSource];
+        }
+      }
+      image.setAttribute('src', prewImage());
+    }
+  }
+});
