@@ -33,6 +33,10 @@ closeButton.addEventListener('click', () => {
   backdrop.classList.add('is-hidden');
 });
 
+backdrop.addEventListener('click', () => {
+  backdrop.classList.add('is-hidden');
+});
+
 gallery.addEventListener('click', openModal);
 
 function openModal(e) {
