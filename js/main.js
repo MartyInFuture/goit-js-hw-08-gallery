@@ -74,28 +74,25 @@ document.addEventListener('keydown', (e) => {
   if (!backdrop.classList.contains('is-hidden')) {
     const image = document.querySelector('.modal__image');
     const imageSource = imageArr.indexOf(image.getAttribute('src'));
+
+    function nextImage(direction) {
+      let nextImage;
+      const imageIndex = imageArr.indexOf(imageArr[imageSource]);
+
+      if (direction === 'next' && imageIndex < imageArr.length - 1) {
+        nextImage = imageArr[imageSource + 1];
+        return nextImage;
+      } else if (direction === 'prev' && imageIndex > 0) {
+        nextImage = imageArr[imageSource - 1];
+        return nextImage;
+      } else {
+        return imageArr[imageSource];
+      }
+    }
     if (e.keyCode === 39) {
-      function nextImage() {
-        const imageIndex = imageArr.indexOf(imageArr[imageSource]);
-        const nextImage = imageArr[imageSource + 1];
-        if (imageIndex < imageArr.length - 1) {
-          return nextImage;
-        } else {
-          return imageArr[imageSource];
-        }
-      }
-      image.setAttribute('src', nextImage());
+      image.setAttribute('src', nextImage('next'));
     } else if (e.keyCode === 37) {
-      function prewImage() {
-        const imageIndex = imageArr.indexOf(imageArr[imageSource]);
-        const nextImage = imageArr[imageSource - 1];
-        if (imageIndex > 0) {
-          return nextImage;
-        } else {
-          return imageArr[imageSource];
-        }
-      }
-      image.setAttribute('src', prewImage());
+      image.setAttribute('src', nextImage('prev'));
     }
   }
 });
