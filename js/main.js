@@ -11,9 +11,10 @@ const imageArr = [
 ];
 
 const gallery = document.querySelector('.gallery');
+const closeButton = document.querySelector('.modal__button');
+const backdrop = document.querySelector('.backdrop');
 
-const length = 10;
-
+// fill our list with picture
 for (let i = 0; i < imageArr.length; i++) {
   const item = document.createElement('li');
   item.setAttribute('class', 'gallery__item');
@@ -24,19 +25,7 @@ for (let i = 0; i < imageArr.length; i++) {
 
   document.querySelector('ul.gallery').appendChild(item).appendChild(image);
 }
-
-const closeButton = document.querySelector('.modal__button');
-
-const backdrop = document.querySelector('.backdrop');
-
-closeButton.addEventListener('click', () => {
-  backdrop.classList.add('is-hidden');
-});
-
-backdrop.addEventListener('click', () => {
-  backdrop.classList.add('is-hidden');
-});
-
+// open modal
 gallery.addEventListener('click', openModal);
 
 function openModal(e) {
@@ -44,8 +33,8 @@ function openModal(e) {
     return;
   }
   backdrop.classList.remove('is-hidden');
+
   let target;
-  // console.log(e.target.nodeName);
   if (e.target.nodeName === 'LI') {
     target = e.target.querySelector('.gallery__image');
   } else {
@@ -57,9 +46,24 @@ function openModal(e) {
 
 function openImage(target) {
   const targetImage = target.getAttribute('src');
-  console.log(targetImage);
-
   const modalImage = document.querySelector('.modal__image');
+
   modalImage.setAttribute('src', targetImage);
-  console.log(modalImage);
 }
+
+// close modal
+closeButton.addEventListener('click', () => {
+  backdrop.classList.add('is-hidden');
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    backdrop.classList.add('is-hidden');
+  }
+});
+
+backdrop.addEventListener('click', (e) => {
+  if (e.target.nodeName === 'DIV') {
+    backdrop.classList.add('is-hidden');
+  }
+});
