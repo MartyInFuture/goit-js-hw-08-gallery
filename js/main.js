@@ -13,6 +13,7 @@ const imageArr = [
 const gallery = document.querySelector('.gallery');
 const closeButton = document.querySelector('.modal__button');
 const backdrop = document.querySelector('.backdrop');
+const modalImage = document.querySelector('.modal__image');
 
 // fill our list with picture
 for (let i = 0; i < imageArr.length; i++) {
@@ -25,6 +26,7 @@ for (let i = 0; i < imageArr.length; i++) {
 
   document.querySelector('ul.gallery').appendChild(item).appendChild(image);
 }
+
 // open modal
 gallery.addEventListener('click', openModal);
 
@@ -46,8 +48,6 @@ function openModal(e) {
 
 function openImage(target) {
   const targetImage = target.getAttribute('src');
-  const modalImage = document.querySelector('.modal__image');
-
   modalImage.setAttribute('src', targetImage);
 }
 
@@ -57,42 +57,23 @@ closeButton.addEventListener('click', () => {
 });
 
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    backdrop.classList.add('is-hidden');
-  }
+  if (e.key === 'Escape') backdrop.classList.add('is-hidden');
 });
 
 backdrop.addEventListener('click', (e) => {
-  if (e.target.nodeName === 'DIV') {
-    backdrop.classList.add('is-hidden');
-  }
+  if (e.target.nodeName === 'DIV') backdrop.classList.add('is-hidden');
 });
 
 // arrows
-
 document.addEventListener('keydown', (e) => {
   if (!backdrop.classList.contains('is-hidden')) {
-    const image = document.querySelector('.modal__image');
-    const imageSource = imageArr.indexOf(image.getAttribute('src'));
+    const imageSource = imageArr.indexOf(modalImage.getAttribute('src'));
+    const imageIndex = imageArr.indexOf(imageArr[imageSource]);
 
-    function nextImage(direction) {
-      let nextImage;
-      const imageIndex = imageArr.indexOf(imageArr[imageSource]);
-
-      if (direction === 'next' && imageIndex < imageArr.length - 1) {
-        nextImage = imageArr[imageSource + 1];
-        return nextImage;
-      } else if (direction === 'prev' && imageIndex > 0) {
-        nextImage = imageArr[imageSource - 1];
-        return nextImage;
-      } else {
-        return imageArr[imageSource];
-      }
-    }
-    if (e.keyCode === 39) {
-      image.setAttribute('src', nextImage('next'));
-    } else if (e.keyCode === 37) {
-      image.setAttribute('src', nextImage('prev'));
+    if (e.keyCode === 39 && imageIndex < imageArr.length - 1) {
+      modalImage.setAttribute('src', imageArr[imageSource + 1]);
+    } else if (e.keyCode === 37 && imageIndex > 0) {
+      modalImage.setAttribute('src', imageArr[imageSource - 1]);
     }
   }
 });
